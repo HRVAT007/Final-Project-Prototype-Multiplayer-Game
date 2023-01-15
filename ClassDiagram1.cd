@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Ak47ObserverVisual">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAABBAAAAACAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Ak47ObserverVisual.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BuildingStats">
+    <Position X="1" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BuildingStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CharacterStats">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAABAIACACAACgAAAAEQAAABAIEAAQAAAAggAAAIo=</HashCode>
+      <FileName>Assets\Scripts\CharacterStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyController">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAgEAACAAAAAAIAAAIIAAQAAAIAAAABAAAAAAkBA=</HashCode>
+      <FileName>Assets\Scripts\EnemyController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyStats">
+    <Position X="5.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAQAAAAAgAAgAAAAACAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemyStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemySpawner">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="EnemySpawner.SpawnState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\EnemySpawner.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EASABIAAACBAAIAAAEAAAAAABAACAAAEQAgAAAAQAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemySpawner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyNetworkManager">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\MyNetworkManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkedPlayer">
+    <Position X="8" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\NetworkedPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PickUpController">
+    <Position X="9.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAKgAEDAUAAAAABAAEAAAIBAAAQABAAAAICAABAA=</HashCode>
+      <FileName>Assets\Scripts\PickUpController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerHUD">
+    <Position X="11.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAAAAAQQAAAAAAAABAAAAAAAAAAAAAAAAAAEAEA=</HashCode>
+      <FileName>Assets\Scripts\PlayerHUD.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerStats">
+    <Position X="3.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgAACACAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RigidBodyMovement">
+    <Position X="8" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAIECGAGAAIEQAAAAAIAAKGEBACUAAAAAAQCAKUEQ=</HashCode>
+      <FileName>Assets\Scripts\RigidBodyMovement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wave">
+    <Position X="9.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAAEAAAI=</HashCode>
+      <FileName>Assets\Scripts\Wave.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeaponController">
+    <Position X="11.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgUBgACIACCQtACAEgAMiQCAKAQEAIIQCBGKACAECMA=</HashCode>
+      <FileName>Assets\Scripts\WeaponController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
