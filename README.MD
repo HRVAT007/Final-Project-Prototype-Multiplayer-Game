@@ -6,7 +6,7 @@ Final Project Prototype Multiplayer Game is a game in which players are tasked w
 
 ## Project set-up
 In order to set up the project locally, the following steps must be taken:
-1. Clone the repository locally: `git clone `
+1. Clone the repository locally: `git clone https://github.com/HRVAT007/Final-Project-Prototype-Multiplayer-Game`
 2. Download and install Unity Hub.
 3. Add it to a list of projects and install the required Unity Engine version
 4. Open the project and press start and everything should be ready to go.
