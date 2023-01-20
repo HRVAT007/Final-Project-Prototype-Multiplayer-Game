@@ -12,12 +12,12 @@ public class PickUpController : MonoBehaviour
     public float pickUpRange;
     public float dropForwardForce, dropUpwardForce;
 
-    public static bool equipped = true;
-    public static bool slotFull;
+    public bool equipped = false;
+    public bool slotFull = false;
 
     //controls
     [SerializeField] private KeyCode dropKey = KeyCode.G;
-    [SerializeField] private KeyCode equipKey = KeyCode.E;
+    [SerializeField] private KeyCode equipKey = KeyCode.F;
 
     private void Start()
     {

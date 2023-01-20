@@ -108,6 +108,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   stoppingDistance: 2
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &8779437756515093201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e362148cc67e6c41a51eee352f79953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
   health: 0
   maxHealth: 0
   objectToHide: {fileID: 0}

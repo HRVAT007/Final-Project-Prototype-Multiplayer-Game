@@ -14,7 +14,7 @@ public class Ak47ObserverVisual : NetworkBehaviour
         if (!isOwned) return;
         if (isServerOnly) return;
 
-        ChnageValue(PickUpController.equipped);
+        //ChnageValue(PickUpController.equipped);
     }
 
     [Command]

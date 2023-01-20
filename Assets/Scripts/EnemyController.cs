@@ -13,6 +13,8 @@ public class EnemyController : NetworkBehaviour
     private Transform target;
     private float timeOfLastAttack = 0;
     private bool hasStopped = false;
+    private float radius = 200f;
+    [SerializeField] private LayerMask layerMask;
 
     private void Start()
     {
@@ -26,42 +28,102 @@ public class EnemyController : NetworkBehaviour
         MoveToTarget();
     }
 
+    //private void MoveToTarget()
+    //{
+    //    navMesh.SetDestination(target.position);
+
+    //    float distanceToTarget = Vector3.Distance(target.position, transform.position);
+
+    //    animation.SetFloat("Speed", 1f, 0.3f, Time.deltaTime);
+
+    //    RotateToTarget();
+
+    //    if (distanceToTarget <= navMesh.stoppingDistance)
+    //    {
+    //        animation.SetFloat("Speed", 0f);
+    //        if (!hasStopped)
+    //        {
+    //            hasStopped = true;
+    //            timeOfLastAttack = Time.time;
+    //        }
+
+
+
+    //        if(Time.time >= timeOfLastAttack + enemyStats.attackSpeed)
+    //        {
+    //            timeOfLastAttack = Time.time;
+    //            var targetStats = target.GetComponent<CharacterStats>();
+    //            if (targetStats != null)
+    //            {
+    //                AttackTarget(targetStats);
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (hasStopped)
+    //        {
+    //            hasStopped = false;
+    //        }
+    //    }
+    //}
+
+    //private void RotateToTarget()
+    //{
+    //    Vector3 direction = target.position - transform.position;
+    //    Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+    //    transform.rotation = rotation;
+    //}
+
     private void MoveToTarget()
     {
-        navMesh.SetDestination(target.position);
-
-        float distanceToTarget = Vector3.Distance(target.position, transform.position);
-
-        animation.SetFloat("Speed", 1f, 0.3f, Time.deltaTime);
-
-        RotateToTarget();
-
-        if (distanceToTarget <= navMesh.stoppingDistance)
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius, layerMask);
+        if (hitColliders.Length > 0)
         {
-            animation.SetFloat("Speed", 0f);
-            if (!hasStopped)
+            for (int i = 0; i < hitColliders.Length; i++)
             {
-                hasStopped = true;
-                timeOfLastAttack = Time.time;
-            }
-
-            
-
-            if(Time.time >= timeOfLastAttack + enemyStats.attackSpeed)
-            {
-                timeOfLastAttack = Time.time;
-                var targetStats = target.GetComponent<CharacterStats>();
-                if (targetStats != null)
+                if (hitColliders[i].gameObject.GetComponent<NetworkedPlayer>() != null)
                 {
-                    AttackTarget(targetStats);
+                    target = hitColliders[i].gameObject.transform;
+                    break;
                 }
             }
         }
-        else
+        if (target != null)
         {
-            if (hasStopped)
+            navMesh.SetDestination(target.position);
+
+            float distanceToTarget = Vector3.Distance(target.position, transform.position);
+
+            animation.SetFloat("Speed", 1f, 0.3f, Time.deltaTime);
+
+            RotateToTarget();
+
+            if (distanceToTarget <= navMesh.stoppingDistance)
             {
-                hasStopped = false;
+                animation.SetFloat("Speed", 0f);
+                if (!hasStopped)
+                {
+                    hasStopped = true;
+                    timeOfLastAttack = Time.time;
+                }
+
+                if (Time.time >= timeOfLastAttack + enemyStats.attackSpeed)
+                {
+                    timeOfLastAttack = Time.time;
+                    var targetStats = target.GetComponent<CharacterStats>();
+                    if (targetStats != null)
+                    {
+                        AttackTarget(targetStats);
+                    }
+                }
+            }
+            else
+            {
+                if (hasStopped)
+                {
+                    hasStopped = false;
+                }
             }
         }
     }
