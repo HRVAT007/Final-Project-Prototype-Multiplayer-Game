@@ -1,21 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
-public class PickUpController : NetworkBehaviour
+public class PickUpController : MonoBehaviour
 {
     public WeaponController gunScript;
     public Rigidbody rigidBody;
     public BoxCollider coll;
-    Transform player, gunContainer, _camera;
+    public Transform player, gunContainer, _camera, gunContainer2;
+    public bool m4;
 
     public float pickUpRange;
     public float dropForwardForce, dropUpwardForce;
 
-
     public bool equipped = false;
-
     public bool slotFull = false;
 
     //controls
@@ -26,6 +24,7 @@ public class PickUpController : NetworkBehaviour
     {
         _camera = Camera.main.transform;
         gunContainer = _camera.GetChild(0);
+        gunContainer2 = _camera.GetChild(1);
 
         player = NetworkedPlayer.Instance == null ? null : NetworkedPlayer.Instance.transform;
 
@@ -44,7 +43,7 @@ public class PickUpController : NetworkBehaviour
             //rigidBody.isKinematic = true;
             //coll.isTrigger = true;
             //slotFull = true;
-            CmdPickUp();
+            PickUp();
         }
     }
 
@@ -69,34 +68,49 @@ public class PickUpController : NetworkBehaviour
     {
         Vector3 distanceToPlayer = player.position - transform.position;
         if (!equipped && distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(equipKey) && !slotFull)
-            CmdPickUp();
+            PickUp();
 
         if (equipped && Input.GetKeyDown(dropKey))
-            CmdDrop();
+            Drop();
     }
 
-    [Command(requiresAuthority = false)]
-    private void CmdPickUp()
+    private void PickUp()
     {
-        if (!isServer) return;
-        equipped = true;
-        slotFull = true;
+        if (m4)
+        {
+            equipped = true;
+            slotFull = true;
 
-        transform.SetParent(gunContainer);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.Euler(Vector3.zero);
-        transform.localScale = Vector3.one;
+            transform.SetParent(gunContainer2);
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.Euler(Vector3.zero);
+            transform.localScale = Vector3.one;
 
-        rigidBody.isKinematic = true;
-        rigidBody.interpolation = RigidbodyInterpolation.None;
-        coll.isTrigger = true;
-        gunScript.enabled = true;
+            rigidBody.isKinematic = true;
+            rigidBody.interpolation = RigidbodyInterpolation.None;
+            coll.isTrigger = true;
+            gunScript.enabled = true;
+        }
+        else
+        {
+            equipped = true;
+            slotFull = true;
+
+            transform.SetParent(gunContainer);
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.Euler(Vector3.zero);
+            transform.localScale = Vector3.one;
+
+            rigidBody.isKinematic = true;
+            rigidBody.interpolation = RigidbodyInterpolation.None;
+            coll.isTrigger = true;
+            gunScript.enabled = true;
+        }
+        
     }
 
-    [Command(requiresAuthority = false)]
-    private void CmdDrop()
+    private void Drop()
     {
-        if (!isServer) return;
         equipped = false;
         slotFull = false;
 
@@ -106,29 +120,12 @@ public class PickUpController : NetworkBehaviour
         rigidBody.AddForce(_camera.forward * dropForwardForce, ForceMode.Impulse);
         rigidBody.AddForce(_camera.up * dropUpwardForce, ForceMode.Impulse);
 
+        float random = Random.Range(-1f, 1f);
+        rigidBody.AddTorque(new Vector3(random, random, random) * 10);
+
         rigidBody.isKinematic = false;
         coll.isTrigger = false;
         gunScript.enabled = false;
         rigidBody.interpolation = RigidbodyInterpolation.Extrapolate;
-    }
-    private void EquippedChange(bool oldValue, bool newValue)
-    {
-        this.equipped = newValue;
-        gunScript.enabled = newValue;
-        rigidBody.isKinematic = newValue;
-        coll.isTrigger = newValue;
-        if (newValue)
-        {
-            transform.SetParent(gunContainer);
-            transform.localPosition = Vector3.zero;
-            transform.localRotation = Quaternion.Euler(Vector3.zero);
-            transform.localScale = Vector3.one;
-            slotFull = true;
-        }
-        else
-        {
-            transform.SetParent(null);
-            slotFull = false;
-        }
     }
 }

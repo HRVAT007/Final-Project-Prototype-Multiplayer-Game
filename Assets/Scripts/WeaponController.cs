@@ -15,7 +15,7 @@ public class WeaponController : MonoBehaviour
     //gun stats
     [SerializeField] private float timeBetweenShooting, spread, reloadTime, timeBetweenShoots, range;
     [SerializeField] private int magazineSize, bulletsPerTap;
-    [SerializeField] private bool alloweButtonHold;
+    [SerializeField] private bool alloweButtonHold, M4;
     [SerializeField] private int bulletsLeft, bulletsShot, damage;
 
     //recoil
@@ -34,6 +34,7 @@ public class WeaponController : MonoBehaviour
     private LayerMask whatIsEnemy;
     public AudioSource shootingAudio;
     public AudioSource reloadAudio;
+    public ShootingSound shootingSound;
     //private HealthSystem healthSystem = new HealthSystem();
     
     //graphics
@@ -113,7 +114,8 @@ public class WeaponController : MonoBehaviour
 
         Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
-        GetComponent<AudioSource>().Play();
+        //shootingAudio.Play();
+        shootingSound.CmdShootSound();
 
 
         Vector3 targetPoint;
@@ -218,18 +220,38 @@ public class WeaponController : MonoBehaviour
 
     private void Recoiling()
     {
-        if (recoil > 0f)
+        if (M4)
         {
-            Quaternion maxRecoil = Quaternion.Euler(maxRecoil_x, maxRecoil_y, 0f);
-            // Dampen towards the target rotation
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, maxRecoil, Time.deltaTime * recoilSpeed);
-            recoil -= Time.deltaTime;
+            if (recoil > 0f)
+            {
+                Quaternion maxRecoil = Quaternion.Euler(-maxRecoil_x, -maxRecoil_y, 0f);
+                // Dampen towards the target rotation
+                transform.localRotation = Quaternion.Slerp(transform.localRotation, maxRecoil, Time.deltaTime * recoilSpeed);
+                recoil -= Time.deltaTime;
+            }
+            else
+            {
+                recoil = 0f;
+                // Dampen towards the target rotation
+                transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, Time.deltaTime * recoilSpeed / 2);
+            }
         }
+        
         else
         {
-            recoil = 0f;
-            // Dampen towards the target rotation
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, Time.deltaTime * recoilSpeed / 2);
+            if (recoil > 0f)
+            {
+                Quaternion maxRecoil = Quaternion.Euler(maxRecoil_x, maxRecoil_y, 0f);
+                // Dampen towards the target rotation
+                transform.localRotation = Quaternion.Slerp(transform.localRotation, maxRecoil, Time.deltaTime * recoilSpeed);
+                recoil -= Time.deltaTime;
+            }
+            else
+            {
+                recoil = 0f;
+                // Dampen towards the target rotation
+                transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, Time.deltaTime * recoilSpeed / 2);
+            }
         }
     }
 }

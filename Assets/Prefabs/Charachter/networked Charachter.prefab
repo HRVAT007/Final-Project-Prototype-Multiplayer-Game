@@ -338,8 +338,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  visualObject: {fileID: 0}
-  _isEquipped: 0
+  visualObjects: []
+  pickUpController: {fileID: 0}
+  weaponName: 
 --- !u!1 &2122228864076997225
 GameObject:
   m_ObjectHideFlags: 0

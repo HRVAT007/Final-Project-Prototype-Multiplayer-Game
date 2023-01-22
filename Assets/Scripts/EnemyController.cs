@@ -28,102 +28,42 @@ public class EnemyController : NetworkBehaviour
         MoveToTarget();
     }
 
-    //private void MoveToTarget()
-    //{
-    //    navMesh.SetDestination(target.position);
-
-    //    float distanceToTarget = Vector3.Distance(target.position, transform.position);
-
-    //    animation.SetFloat("Speed", 1f, 0.3f, Time.deltaTime);
-
-    //    RotateToTarget();
-
-    //    if (distanceToTarget <= navMesh.stoppingDistance)
-    //    {
-    //        animation.SetFloat("Speed", 0f);
-    //        if (!hasStopped)
-    //        {
-    //            hasStopped = true;
-    //            timeOfLastAttack = Time.time;
-    //        }
-
-
-
-    //        if(Time.time >= timeOfLastAttack + enemyStats.attackSpeed)
-    //        {
-    //            timeOfLastAttack = Time.time;
-    //            var targetStats = target.GetComponent<CharacterStats>();
-    //            if (targetStats != null)
-    //            {
-    //                AttackTarget(targetStats);
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (hasStopped)
-    //        {
-    //            hasStopped = false;
-    //        }
-    //    }
-    //}
-
-    //private void RotateToTarget()
-    //{
-    //    Vector3 direction = target.position - transform.position;
-    //    Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
-    //    transform.rotation = rotation;
-    //}
-
     private void MoveToTarget()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius, layerMask);
-        if (hitColliders.Length > 0)
+        navMesh.SetDestination(target.position);
+
+        float distanceToTarget = Vector3.Distance(target.position, transform.position);
+
+        animation.SetFloat("Speed", 1f, 0.3f, Time.deltaTime);
+
+        RotateToTarget();
+
+        if (distanceToTarget <= navMesh.stoppingDistance)
         {
-            for (int i = 0; i < hitColliders.Length; i++)
+            animation.SetFloat("Speed", 0f);
+            if (!hasStopped)
             {
-                if (hitColliders[i].gameObject.GetComponent<NetworkedPlayer>() != null)
+                hasStopped = true;
+                timeOfLastAttack = Time.time;
+            }
+
+
+
+            if (Time.time >= timeOfLastAttack + enemyStats.attackSpeed)
+            {
+                timeOfLastAttack = Time.time;
+                var targetStats = target.GetComponent<CharacterStats>();
+                if (targetStats != null)
                 {
-                    target = hitColliders[i].gameObject.transform;
-                    break;
+                    AttackTarget(targetStats);
                 }
             }
         }
-        if (target != null)
+        else
         {
-            navMesh.SetDestination(target.position);
-
-            float distanceToTarget = Vector3.Distance(target.position, transform.position);
-
-            animation.SetFloat("Speed", 1f, 0.3f, Time.deltaTime);
-
-            RotateToTarget();
-
-            if (distanceToTarget <= navMesh.stoppingDistance)
+            if (hasStopped)
             {
-                animation.SetFloat("Speed", 0f);
-                if (!hasStopped)
-                {
-                    hasStopped = true;
-                    timeOfLastAttack = Time.time;
-                }
-
-                if (Time.time >= timeOfLastAttack + enemyStats.attackSpeed)
-                {
-                    timeOfLastAttack = Time.time;
-                    var targetStats = target.GetComponent<CharacterStats>();
-                    if (targetStats != null)
-                    {
-                        AttackTarget(targetStats);
-                    }
-                }
-            }
-            else
-            {
-                if (hasStopped)
-                {
-                    hasStopped = false;
-                }
+                hasStopped = false;
             }
         }
     }
