@@ -17,6 +17,7 @@ Low-Poly Glock Model - https://sketchfab.com/3d-models/pistol-low-poly-dd2bd8047
 Gun Sounds - https://assetstore.unity.com/packages/audio/sound-fx/weapons/post-apocalypse-guns-demo-33515
 Level Assets - https://assetstore.unity.com/packages/3d/environments/industrial/low-poly-city-pack-collection-3d-model-demo-201466
 Prototype Texture Assests - https://assetstore.unity.com/packages/2d/textures-materials/gridbox-prototype-materials-129127
+Open Fracture - https://github.com/dgreenheck/OpenFracture
 
 ## License
 The content of this site is licensed under the [MIT](https://choosealicense.com/licenses/mit/) license.
