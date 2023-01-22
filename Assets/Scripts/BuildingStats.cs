@@ -17,6 +17,4 @@ public class BuildingStats : CharacterStats
         SetHealthTo(maxHealth);
         isDead = false;
     }
-
-
 }
