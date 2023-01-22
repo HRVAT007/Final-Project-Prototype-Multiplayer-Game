@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class PickUpController : MonoBehaviour
+public class PickUpController : NetworkBehaviour
 {
     public WeaponController gunScript;
     public Rigidbody rigidBody;
@@ -12,7 +13,9 @@ public class PickUpController : MonoBehaviour
     public float pickUpRange;
     public float dropForwardForce, dropUpwardForce;
 
+
     public bool equipped = false;
+
     public bool slotFull = false;
 
     //controls
@@ -41,7 +44,7 @@ public class PickUpController : MonoBehaviour
             //rigidBody.isKinematic = true;
             //coll.isTrigger = true;
             //slotFull = true;
-            PickUp();
+            CmdPickUp();
         }
     }
 
@@ -66,14 +69,16 @@ public class PickUpController : MonoBehaviour
     {
         Vector3 distanceToPlayer = player.position - transform.position;
         if (!equipped && distanceToPlayer.magnitude <= pickUpRange && Input.GetKeyDown(equipKey) && !slotFull)
-            PickUp();
+            CmdPickUp();
 
         if (equipped && Input.GetKeyDown(dropKey))
-            Drop();
+            CmdDrop();
     }
 
-    private void PickUp()
+    [Command(requiresAuthority = false)]
+    private void CmdPickUp()
     {
+        if (!isServer) return;
         equipped = true;
         slotFull = true;
 
@@ -88,8 +93,10 @@ public class PickUpController : MonoBehaviour
         gunScript.enabled = true;
     }
 
-    private void Drop()
+    [Command(requiresAuthority = false)]
+    private void CmdDrop()
     {
+        if (!isServer) return;
         equipped = false;
         slotFull = false;
 
@@ -99,12 +106,29 @@ public class PickUpController : MonoBehaviour
         rigidBody.AddForce(_camera.forward * dropForwardForce, ForceMode.Impulse);
         rigidBody.AddForce(_camera.up * dropUpwardForce, ForceMode.Impulse);
 
-        float random = Random.Range(-1f, 1f);
-        rigidBody.AddTorque(new Vector3(random, random, random) * 10);
-
         rigidBody.isKinematic = false;
         coll.isTrigger = false;
         gunScript.enabled = false;
         rigidBody.interpolation = RigidbodyInterpolation.Extrapolate;
+    }
+    private void EquippedChange(bool oldValue, bool newValue)
+    {
+        this.equipped = newValue;
+        gunScript.enabled = newValue;
+        rigidBody.isKinematic = newValue;
+        coll.isTrigger = newValue;
+        if (newValue)
+        {
+            transform.SetParent(gunContainer);
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.Euler(Vector3.zero);
+            transform.localScale = Vector3.one;
+            slotFull = true;
+        }
+        else
+        {
+            transform.SetParent(null);
+            slotFull = false;
+        }
     }
 }
